@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Stage Timer</title><link rel="stylesheet" href="app.css"></head>
+<body>
+<header class="top">
+  <div class="brand">Stage Timer</div>
+  <nav id="nav">
+    <button data-tab="timer" data-i="timer" class="on"></button>
+    <button data-tab="appearance" data-i="appearance"></button>
+    <button data-tab="account" data-i="account"></button>
+    <button data-tab="feedback" data-i="feedback"></button>
+    <button data-tab="updates" data-i="updates"></button>
+  </nav>
+  <div class="sp"></div>
+  <button id="badge" class="badge"></button>
+</header>
+
+<main>
+<!-- ============ TIMER ============ -->
+<section id="tab-timer" class="tab on">
+  <div class="grid1">
+    <div class="c1">
+      <h2 data-i="now_on_stage"></h2>
+      <label data-i="activity_title"></label><input id="title">
+      <label data-i="moderator_name"></label><input id="mod">
+      <h2 class="mt" data-i="countdown_length"></h2>
+      <div class="mm">
+        <div><label data-i="minutes"></label><input id="mins" type="number" min="0" max="999"></div>
+        <div><label data-i="seconds"></label><input id="secs" type="number" min="0" max="59"></div>
+        <button id="setT" class="btn acc" data-i="set_timer"></button>
+      </div>
+      <p class="small" data-i="timer_hint"></p>
+    </div>
+    <div class="c2">
+      <h2 data-i="output"></h2>
+      <select id="disp"></select>
+      <div class="btns"><button id="openOut" class="btn acc" data-i="open_output"></button><button id="closeOut" class="btn" data-i="close_output"></button></div>
+      <p class="small" data-i="output_help"></p>
+      <code id="url">http://127.0.0.1:4777/output.html</code>
+    </div>
+    <div class="c3">
+      <div id="pv"><iframe id="pvf" src="http://127.0.0.1:4777/output.html" tabindex="-1"></iframe></div>
+      <div class="ctl">
+        <button id="bStart" class="btn acc"></button>
+        <button id="bReset" class="btn" data-i="reset"></button>
+        <button id="bM" class="btn ol"></button>
+        <button id="bP" class="btn"></button>
+        <span id="status"></span>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="grid2">
+    <div class="sf">
+      <h2 data-i="schedule"></h2>
+      <label data-i="title"></label><input id="sTitle" data-ip="title">
+      <label data-i="moderator"></label><input id="sMod" data-ip="moderator">
+      <div class="trio">
+        <div><label data-i="start_time"></label><input id="sStart" type="time"></div>
+        <div><label data-i="minutes"></label><input id="sMin" type="number" min="0" max="999" value="5"></div>
+        <div><label data-i="seconds"></label><input id="sSec" type="number" min="0" max="59" value="0"></div>
+      </div>
+      <button id="sAdd" class="btn acc" data-i="add_activity"></button>
+    </div>
+    <div class="st">
+      <div class="bar2">
+        <button id="bPrev" class="btn" data-i="previous"></button>
+        <button id="bNext" class="btn acc" data-i="load_next"></button>
+        <button id="bNextS" class="btn" data-i="load_next_start"></button>
+        <label class="chk"><input type="checkbox" id="auto"><span data-i="auto_advance"></span></label>
+      </div>
+      <table>
+        <thead><tr><th data-i="start_time"></th><th data-i="title"></th><th data-i="moderator"></th><th data-i="length"></th><th></th></tr></thead>
+        <tbody id="sched"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ APPEARANCE ============ -->
+<section id="tab-appearance" class="tab">
+  <div class="cards">
+    <div class="card">
+      <h2 data-i="logo"></h2>
+      <div id="logoPrev" class="logoPrev"></div>
+      <div class="btns"><button id="logoImp" class="btn acc" data-i="import"></button><button id="logoRm" class="btn" data-i="remove"></button></div>
+      <p class="small">PNG · JPG · SVG · WebP · GIF — ≤ 1 MB</p>
+      <p class="msg" id="logoMsg"></p>
+    </div>
+    <div class="card">
+      <h2 data-i="background"></h2>
+      <div class="row"><input type="color" id="bgC"><input id="bgH" maxlength="7"><button id="bgReset" class="btn" data-i="reset"></button></div>
+      <div class="btns"><button id="bgImp" class="btn acc" data-i="import"></button><button id="bgRm" class="btn" data-i="remove"></button></div>
+      <p class="small">PNG · JPG · WebP</p>
+    </div>
+    <div class="card">
+      <h2 data-i="language"></h2>
+      <select id="langSel"></select>
+    </div>
+    <div class="card wide">
+      <h2><span data-i="font"></span> <span class="small" id="fCount"></span></h2>
+      <div class="row2">
+        <div><select id="fActive"></select>
+          <div id="fMine" class="chips"></div></div>
+        <div><input id="fSearch" data-ip="search"><div id="fList" class="flist"></div></div>
+      </div>
+    </div>
+    <div class="card wide">
+      <h2><span data-i="theme"></span> <span class="small" id="thCount"></span></h2>
+      <div class="btns"><button id="thDark" class="btn" data-i="dark"></button><button id="thLight" class="btn" data-i="light"></button></div>
+      <div class="row wrap">
+        <input id="thName" data-ip="title" maxlength="24">
+        <label class="inl"><span data-i="background"></span><input type="color" id="thBg"></label>
+        <label class="inl"><span data-i="text"></span><input type="color" id="thTx"></label>
+        <label class="inl"><span data-i="accent"></span><input type="color" id="thAc"></label>
+        <button id="thSave" class="btn acc" data-i="save_theme"></button>
+        <button id="thImp" class="btn" data-i="import"></button>
+        <button id="thExp" class="btn" data-i="export"></button>
+      </div>
+      <div id="thList" class="chips"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACCOUNT ============ -->
+<section id="tab-account" class="tab"><div class="narrow" id="acctBox"></div></section>
+
+<!-- ============ FEEDBACK ============ -->
+<section id="tab-feedback" class="tab"><div class="narrow">
+  <h2 data-i="feedback"></h2>
+  <div id="fbEmailWrap"><label data-i="email"></label><input id="fbEmail" type="email"></div>
+  <label data-i="message"></label><textarea id="fbMsg" rows="8" maxlength="4000"></textarea>
+  <p class="msg" id="fbMsgOut"></p>
+  <div class="btns"><button id="fbSend" class="btn acc" data-i="send"></button></div>
+</div></section>
+
+<!-- ============ UPDATES ============ -->
+<section id="tab-updates" class="tab"><div class="narrow">
+  <h2><span data-i="updates"></span> <span class="small" id="ver"></span></h2>
+  <div class="btns"><button id="updChk" class="btn acc" data-i="check_updates"></button></div>
+  <div id="updMsg" class="msg big"></div>
+</div></section>
+</main>
+<div id="modalRoot"></div>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body></html>

@@ -1,0 +1,25 @@
+@font-face{font-family:'Poppins';font-weight:400;src:url(/fonts/Poppins-Regular.ttf)}
+@font-face{font-family:'Poppins';font-weight:600;src:url(/fonts/Poppins-SemiBold.ttf)}
+@font-face{font-family:'Poppins';font-weight:800;src:url(/fonts/Poppins-ExtraBold.ttf)}
+@font-face{font-family:'Montserrat';font-weight:100 900;src:url(/fonts/Montserrat.ttf)}
+@font-face{font-family:'Outfit';font-weight:100 900;src:url(/fonts/Outfit.ttf)}
+@font-face{font-family:'Figtree';font-weight:300 900;src:url(/fonts/Figtree.ttf)}
+@font-face{font-family:'Bebas Neue';font-weight:400;src:url(/fonts/BebasNeue-Regular.ttf)}
+*{box-sizing:border-box;margin:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#101518;color:#fff;font-family:'Poppins',sans-serif;font-synthesis:none}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--s,1));overflow:hidden;background:#101518}
+#bgimg{position:absolute;inset:0;background-size:cover;background-position:center}
+#logo{position:absolute;left:95px;top:56px;width:176px;height:176px;border-radius:50%;background:#fff}
+#logo.has{background-color:transparent;background-size:contain;background-repeat:no-repeat;background-position:center;border-radius:0}
+#title{position:absolute;left:0;right:0;top:150px;text-align:center;font-weight:800;font-size:82px;line-height:1.1;text-transform:uppercase;padding:0 300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#clock{position:absolute;left:0;right:0;top:250px;height:470px;text-align:center;font-weight:800;font-size:470px;line-height:470px;font-variant-numeric:tabular-nums;letter-spacing:-6px;color:#fff;white-space:nowrap}
+#clock.red{color:#FF0000}
+#clock.up{color:#FFB300;font-size:330px;letter-spacing:0;animation:blink 1s steps(1) infinite}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+#bar{position:absolute;left:458px;top:735px;width:1014px;height:75px;background:rgba(255,255,255,.07)}
+#fill{position:absolute;left:0;top:0;bottom:0;width:calc(var(--p,0)*100%);overflow:hidden;transition:width 1s linear}
+#grad{width:1014px;height:100%;background:linear-gradient(90deg,#1ea400 0%,#7fd900 30%,#ffff00 62%,#ff9d00 80%,#d10000 100%)}
+#thumb{position:absolute;top:-21px;height:117px;width:56px;border-radius:12px;background:rgba(215,215,215,.72);left:calc(var(--p,0)*100%);transform:translateX(-50%);transition:left 1s linear}
+#mod{position:absolute;left:0;right:0;top:868px;text-align:center;font-weight:800;font-size:40px;text-transform:uppercase;padding:0 300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#date{position:absolute;right:100px;bottom:50px;font-weight:800;font-size:26px;text-transform:uppercase}
+.nt #fill,.nt #thumb{transition:none}
