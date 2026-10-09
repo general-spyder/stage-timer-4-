@@ -4,8 +4,6 @@ on:
   workflow_dispatch:
   push:
     branches: [main, master]
-    paths-ignore:
-      - '**/*.md'
 
 permissions:
   contents: read
@@ -13,6 +11,7 @@ permissions:
 jobs:
   build:
     name: Build ${{ matrix.os }} installer
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
@@ -23,13 +22,26 @@ jobs:
           - os: macos-latest
             command: dist:mac
             artifact: Stage-Timer-macOS
-    runs-on: ${{ matrix.os }}
-    defaults:
-      run:
-        working-directory: .
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+
+      - name: Locate Stage Timer project
+        id: locate
+        shell: bash
+        run: |
+          if [[ -f package.json ]]; then
+            app_dir='.'
+          elif [[ -f stage-timer/package.json ]]; then
+            app_dir='stage-timer'
+          else
+            echo 'ERROR: Cannot find package.json in the repository root or stage-timer/ folder.' >&2
+            find . -maxdepth 3 -name package.json -print
+            exit 1
+          fi
+          echo "directory=$app_dir" >> "$GITHUB_OUTPUT"
+          echo "Stage Timer directory: $app_dir"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -37,12 +49,15 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
+        working-directory: ${{ steps.locate.outputs.directory }}
         run: npm install --no-audit --no-fund
 
       - name: Download bundled fonts
+        working-directory: ${{ steps.locate.outputs.directory }}
         run: npm run fonts
 
       - name: Build installer
+        working-directory: ${{ steps.locate.outputs.directory }}
         run: npm run ${{ matrix.command }} -- --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -53,7 +68,7 @@ jobs:
         with:
           name: ${{ matrix.artifact }}
           path: |
-            dist/*.exe
-            dist/*.dmg
+            ${{ steps.locate.outputs.directory }}/dist/*.exe
+            ${{ steps.locate.outputs.directory }}/dist/*.dmg
           if-no-files-found: error
           retention-days: 30
